@@ -1,0 +1,508 @@
+PARSER_BEGIN(RuleParser)
+package libreDragon.ruleParser;
+import java.util.ArrayList;
+import libreDragon.model.*;
+import java.io.InputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+public class RuleParser {
+private static RulesConfiguration rules;
+	public static void main(String args[]) throws ParseException {
+		RuleParser parser = new RuleParser(System.in);
+		Configuration.rules = new RulesConfiguration();
+		parser.Rule();
+	}
+public static void readRules(InputStream stream, RulesConfiguration r) throws ParseException {
+	rules = r;
+	if (jj_initialized_once){
+	RuleParser.ReInit(stream);
+	RuleParser.RuleList();
+	}
+	else{
+	RuleParser parser = new RuleParser(stream);
+	parser.RuleList();
+	}
+	}
+	public static void writeRule(Rule rule) {
+	final String chemin = "config//customRules.cfg";
+	final File fichier =new File(chemin);
+	try {
+	if(!fichier.exists())
+	fichier.createNewFile();
+	final FileWriter writer = new FileWriter(fichier, true);
+	try {
+	writer.write(rule.getInputModel().getExpr()+"	"+"=(§Custom)=>"+rule.getResultModel().getExpr()+"\n");
+	} finally {
+	writer.close();
+	}
+	} catch (Exception e) {
+	System.out.println("Impossible de creer le fichier");
+	}
+	}
+	/**
+	* Lis les expressions jouables ainsi que les expression a atteindre pour finir la
+	* session de jeu dans le fichier config/formulas.cfg
+	*/
+	public static void readExpressionsJouables(ArrayList<Pair<Expression,Expression>> liste ){
+	String configPath = "config";
+	BufferedReader lecteurAvecBuffer = null;
+	String ligne,expression,resultat;
+	int i;
+	try {
+	lecteurAvecBuffer = new BufferedReader(new FileReader(configPath + "/formula.cfg"));
+	}
+	catch(FileNotFoundException exc){
+	System.out.println("Erreur d'ouverture");
+	}
+	try {
+	while ((ligne = lecteurAvecBuffer.readLine()) != null){
+	i = 0;
+	while (i+2 < ligne.length() && ligne.substring(i,i+2).compareTo("=>") != 0){
+	i++;
+	}
+	expression = ligne.substring(0, i-1);
+	resultat = ligne.substring(i+2);
+	try {
+	InputStream expInitial = new ByteArrayInputStream(expression.getBytes(StandardCharsets.UTF_8));
+	InputStream expFinal = new ByteArrayInputStream(resultat.getBytes(StandardCharsets.UTF_8));
+	liste.add(new Pair (RuleParser.readExpression(expInitial),RuleParser.readExpression(expFinal)));
+	} catch (libreDragon.ruleParser.ParseException e) {
+	e.printStackTrace();
+	}
+	}
+	}
+	catch (IOException e){
+	e.printStackTrace();
+	}
+	}
+	public static Expression readExpression(InputStream stream) throws ParseException {
+		Expression expression = null;
+	if (jj_initialized_once){
+		RuleParser.ReInit(stream);
+	expression = Terme0();
+	}
+	else {
+	RuleParser parser =  new RuleParser(stream);
+	expression = parser.Terme0();
+	}
+		return expression;
+	}
+}
+
+PARSER_END(RuleParser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+TOKEN :
+{
+  < OR_OP : "|" >
+| < AND_OP : "&" >
+| < SUPEGAL_OP : ">=" >
+| < INFEGAL_OP : "<=" >
+| < SUP_OP : ">" >
+| < INF_OP : "<" >
+| < DIFF_OP : "!=" >
+| < EGAL_OP : "=" >
+| < MOINS_B_OP : "-" >
+| < PLUS_OP : "+" >
+| < DIVIDE_OP : "/" >
+| < FOIS_OP : "*" >
+| < POWER_OP : "^" >
+| < SQRT_LEFT : "sqrt" >
+| < NOT_LEFT : "!" >
+| < CONGRAT_LEFT : "congrat" >
+| < ROOT_LEFT : "#" >
+| < PARENTHESIS_LEFT : "(" >
+| < PARENTHESIS_RIGHT : ")" >
+| < BRACKETS_LEFT : "{" >
+| < BRACKETS_RIGHT : "}" >
+| < LITTERAL : (["a"-"z"])+ >
+| < NOMBRE : (["0"-"9"])+ >
+| < EXPRESSION : ["A"-"Z"] >
+| < RULE_INPUT_TYPE : "§" (["a"-"z","A"-"Z","_", "-"])+ >
+| < LEFT_RULE_EQUIVALENT : "<=(" >
+| < LEFT_RULE_NOT_EQUIVALENT : "=(" >
+| < RIGHT_RULE : ")=>" >
+}
+
+Expression Epsilon() : { } { {return null;} }
+
+void RuleList() :
+{}
+{
+	( Rule() ) *
+	<EOF>
+}
+void Rule() :
+{
+	Expression exp1;
+}
+{
+	exp1 = Terme0()
+	RuleBis(exp1)
+}
+void RuleBis(Expression exp1) :
+{
+	Expression exp2;
+	Token input_type_rule;
+}
+{
+	(
+		<LEFT_RULE_EQUIVALENT>
+		input_type_rule = <RULE_INPUT_TYPE>
+		<RIGHT_RULE>
+		exp2 = Terme0()
+		{rules.addRule(input_type_rule.image.substring(1), new Rule(exp1, exp2));   
+		rules.addRule(input_type_rule.image.substring(1), new Rule(exp2, exp1));   
+		System.out.println(rules.getRules());}
+	) |
+	(
+		<LEFT_RULE_NOT_EQUIVALENT>
+		input_type_rule = <RULE_INPUT_TYPE>
+		<RIGHT_RULE>
+		exp2 = Terme0()
+		{rules.addRule(input_type_rule.image.substring(1), new Rule(exp1, exp2));}
+	)
+}
+void Axiome() :
+{
+	Expression exp;
+}
+{
+	exp = Terme0()
+	<EOF>
+
+	{System.out.println(exp.expressionToString());}
+}
+Expression Terme0() :
+{
+		Expression exp;
+		Expression exp2;
+}
+{
+		exp = Terme1()
+		exp2 = Terme0Bis(exp)
+
+		{ return exp2 == null ? exp : exp2;}
+}
+Expression Terme0Bis(Expression exp) :
+{
+	Token symbol;
+	Expression exp1;
+}
+{
+	(
+		symbol = <OR_OP>
+		exp1 = Terme0()
+		{return new BinaryExpression("OR", exp, exp1); }
+	)
+	|
+	(
+		exp1 = Epsilon()
+		{return exp1;}
+	)
+}
+Expression Terme1() :
+{
+		Expression exp;
+		Expression exp2;
+}
+{
+		exp = Terme2()
+		exp2 = Terme1Bis(exp)
+
+		{ return exp2 == null ? exp : exp2;}
+}
+Expression Terme1Bis(Expression exp) :
+{
+	Token symbol;
+	Expression exp1;
+}
+{
+	(
+		symbol = <AND_OP>
+		exp1 = Terme1()
+		{return new BinaryExpression("AND", exp, exp1); }
+	)
+	|
+	(
+		exp1 = Epsilon()
+		{return exp1;}
+	)
+}
+Expression Terme2() :
+{
+		Expression exp;
+		Expression exp2;
+}
+{
+		exp = Terme3()
+		exp2 = Terme2Bis(exp)
+
+		{ return exp2 == null ? exp : exp2;}
+}
+Expression Terme2Bis(Expression exp) :
+{
+	Token symbol;
+	Expression exp1;
+}
+{
+	(
+		symbol = <SUPEGAL_OP>
+		exp1 = Terme2()
+		{return new BinaryExpression("SUPEGAL", exp, exp1); }
+	)
+	|
+	(
+		symbol = <INFEGAL_OP>
+		exp1 = Terme2()
+		{return new BinaryExpression("INFEGAL", exp, exp1); }
+	)
+	|
+	(
+		symbol = <SUP_OP>
+		exp1 = Terme2()
+		{return new BinaryExpression("SUP", exp, exp1); }
+	)
+	|
+	(
+		symbol = <INF_OP>
+		exp1 = Terme2()
+		{return new BinaryExpression("INF", exp, exp1); }
+	)
+	|
+	(
+		symbol = <DIFF_OP>
+		exp1 = Terme2()
+		{return new BinaryExpression("DIFF", exp, exp1); }
+	)
+	|
+	(
+		symbol = <EGAL_OP>
+		exp1 = Terme2()
+		{return new BinaryExpression("EGAL", exp, exp1); }
+	)
+	|
+	(
+		exp1 = Epsilon()
+		{return exp1;}
+	)
+}
+Expression Terme3() :
+{
+		Expression exp;
+		Expression exp2;
+}
+{
+		exp = Terme4()
+		exp2 = Terme3Bis(exp)
+
+		{ return exp2 == null ? exp : exp2;}
+}
+Expression Terme3Bis(Expression exp) :
+{
+	Token symbol;
+	Expression exp1;
+}
+{
+	(
+		symbol = <MOINS_B_OP>
+		exp1 = Terme3()
+		{return new BinaryExpression("MOINS_B", exp, exp1); }
+	)
+	|
+	(
+		symbol = <PLUS_OP>
+		exp1 = Terme3()
+		{return new BinaryExpression("PLUS", exp, exp1); }
+	)
+	|
+	(
+		exp1 = Epsilon()
+		{return exp1;}
+	)
+}
+Expression Terme4() :
+{
+		Expression exp;
+		Expression exp2;
+}
+{
+		exp = Terme5()
+		exp2 = Terme4Bis(exp)
+
+		{ return exp2 == null ? exp : exp2;}
+}
+Expression Terme4Bis(Expression exp) :
+{
+	Token symbol;
+	Expression exp1;
+}
+{
+	(
+		symbol = <DIVIDE_OP>
+		exp1 = Terme4()
+		{return new BinaryExpression("DIVIDE", exp, exp1); }
+	)
+	|
+	(
+		symbol = <FOIS_OP>
+		exp1 = Terme4()
+		{return new BinaryExpression("FOIS", exp, exp1); }
+	)
+	|
+	(
+		exp1 = Epsilon()
+		{return exp1;}
+	)
+}
+Expression Terme5() :
+{
+		Expression exp;
+		Expression exp2;
+}
+{
+		exp = Terme6()
+		exp2 = Terme5Bis(exp)
+
+		{ return exp2 == null ? exp : exp2;}
+}
+Expression Terme5Bis(Expression exp) :
+{
+	Token symbol;
+	Expression exp1;
+}
+{
+	(
+		symbol = <POWER_OP>
+		exp1 = Terme5()
+		{return new BinaryExpression("POWER", exp, exp1); }
+	)
+	|
+	(
+		exp1 = Epsilon()
+		{return exp1;}
+	)
+}
+Expression Terme6() :
+{
+	Token symbol;
+	Expression exp;
+}
+{
+	(
+		symbol = <SQRT_LEFT>
+		exp = Terme6()
+		{return new UnaryExpression("SQRT", exp);}
+	)
+	|
+	(
+		symbol = <MOINS_B_OP>
+		exp = Terme6()
+		{return new UnaryExpression("MOINS_U", exp);}
+	)
+	|
+	(
+		symbol = <NOT_LEFT>
+		exp = Terme6()
+		{return new UnaryExpression("NOT", exp);}
+	)
+	|
+	(
+		symbol = <CONGRAT_LEFT>
+		exp = Terme6()
+		{return new UnaryExpression("CONGRAT", exp);}
+	)
+	|
+	(
+		symbol = <ROOT_LEFT>
+		exp = Terme6()
+		{return new UnaryExpression("ROOT", exp);}
+	)
+	|
+	(
+		exp = UnaireDroit()
+		{return exp;}
+	)
+}
+Expression UnaireDroit() :
+{
+	Expression primaire;
+	Expression exp;
+
+}
+{
+	primaire = Primaire()
+	exp = UnaireDroitBis(primaire)
+	{if(exp == null) return primaire; return exp;}
+}
+Expression UnaireDroitBis(Expression exp) :
+{
+	Token symbol;
+	Expression exp2;
+	Expression exp3;
+}
+{
+	(
+		symbol = <NOT_LEFT>
+		{ exp2 = new UnaryExpression("FACTORIAL",exp);}
+		exp3 = UnaireDroitBis(exp2)
+		{return exp3 == null ? exp2 : exp3;}
+	)
+	|
+	(
+		exp2 = Epsilon()
+		{return exp2;}
+	)
+}
+Expression Primaire() :
+{
+	Token symbolLeft;
+	Token symbolRight;
+	Expression expression;
+}
+{
+	(
+		symbolLeft = <PARENTHESIS_LEFT>
+		expression = Terme0()
+		symbolRight = <PARENTHESIS_RIGHT>
+		{return new UnaryExpression("PARENTHESIS",expression);}
+
+	)
+	|
+	(
+		symbolLeft = <BRACKETS_LEFT>
+		expression = Terme0()
+		symbolRight = <BRACKETS_RIGHT>
+		{return expression;}
+
+	)
+	|
+	(
+		symbolLeft = <LITTERAL>
+		{return new PrimaryExpression("LITTERAL",symbolLeft.image);}
+	)
+	|
+	(
+		symbolLeft = <NOMBRE>
+		{return new PrimaryExpression("NOMBRE",symbolLeft.image);}
+	)
+	|
+	(
+		symbolLeft = <EXPRESSION>
+		{return new PrimaryExpression("EXPRESSION",symbolLeft.image);}
+	)
+}
