@@ -282,6 +282,37 @@ class Application {
 
 		$('#popup').modal('show')
 	}
+	
+	displayPopup2 (title, content, leftButton, rightButton, leftButtonHandler, rightButtonHandler, onHide,form) {
+		$('#popup-title').text(title)
+		$('#popup-body').text(content)
+		$('#popup-body').append('<div> <form> <input type="text" name="expr"> </input> </form> </div>')
+
+		if (leftButton.length > 0)
+			$('#popup-button-left').text(leftButton)
+		else
+			$('#popup-button-left').hide()
+
+		if (rightButton.length > 0)
+			$('#popup-button-right').text(rightButton)
+		else
+			$('#popup-button-right').hide()
+
+		$('#popup-button-left').off('click')
+		if (leftButtonHandler != undefined)
+			$('#popup-button-left').on('click', leftButtonHandler)
+
+		$('#popup-button-right').off('click')
+		if (leftButtonHandler != undefined)
+			$('#popup-button-right').on('click', rightButtonHandler)
+
+		$('#popup').off('hide.bs.modal')
+		if (onHide != undefined)
+			$('#popup').on('hide.bs.modal', onHide)
+
+		$('#popup').modal('show')
+	}
+
 
 	/**
 	 * Return the memory usage of this process.
