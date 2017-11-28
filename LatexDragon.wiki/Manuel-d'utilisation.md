@@ -13,7 +13,7 @@ Vous avez aussi besoin d'une connexion a internet car MathJax est récupéré su
 
 # Server
 
-##Compillation
+## Compillation
 
 Compiler avec :
 >`gradle build`
@@ -22,7 +22,7 @@ ou
 
 > `./gradlew `
 
-##Lancement
+## Lancement
 
 Lancer le serveur avec :
 
