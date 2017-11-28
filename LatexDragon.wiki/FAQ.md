@@ -1,7 +1,5 @@
 # Qu'est-ce que LatexDragon ?
-..
-
-LatexDragon est un projet open source ayant pour but la création d'une application permettant la manipulation de formule mathématique sous la forme d'un jeu éducatif.
+Le projet est une application open source initialement nommée Kraken-Free-Dragon et développée en java. L’application a ensuite été reprise par l'équipe Master One Incorporate pour améliorer son interface et ses fonctionnalités. La version actuelle de l'application est nommée Latex Dragon. Le jeu permet de manipuler des équations mathématiques et les théorèmes qui y sont liés à savoir l'associativité, la factorisation et bien d’autres. L’utilisateur peut s’en servir pour résoudre des équations mathématiques et toutefois créer un ensemble de règles.
 
 # Les objectifs du projet
 
