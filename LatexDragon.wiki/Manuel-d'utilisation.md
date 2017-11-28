@@ -13,10 +13,23 @@ Vous avez aussi besoin d'une connexion a internet car MathJax est récupéré su
 
 # Server
 
+##Compillation
+
+Compiler avec :
+>`gradle build`
+
+ou 
+
+> `./gradlew `
+
+##Lancement
+
 Lancer le serveur avec :
 
-> `./gradle tomcatRunWar`
-ou
-> `./gradlew tomcatRunWar` 
+> `gradle tomcatRunWar`
+ 
+ ou avec 
+ 
+> `gradlew tomcatRunWar`
 
 Le serveur sera lancé sur l'url `http://localhost:8080/LibreDragon` et contient aussi la documentation du serveur.
