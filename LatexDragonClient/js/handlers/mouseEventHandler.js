@@ -61,6 +61,31 @@ var self = module.exports = {
 
 		$('#tooltip').hide()
 	},
+	
+	/**
+	 * 
+	 */
+	addExpression: function () {
+
+		const instance = require('../Application')
+
+		instance.displayPopup2('Ajout d\'une nouvelle expression pour l\'équation', 'Voulez-vous ajouter une expression ?', 'Oui', 'Annuler', self.sendExpression, () => { $('#popup').modal('hide'),'toto' })
+		
+		
+	},
+	
+	/**
+	 * 
+	 */
+	sendExpression: () => {
+		const instance = require('../Application')
+		const Request = require('../Request')
+
+		Request.buildRequest('CREATETHEOREM').send('/' + instance.gameState.getCurrent().gameId + '/' + self.theoremSelection.start + '/' + self.theoremSelection.end)
+
+		self.toggleCreateTheorem()
+		$('#popup').modal('hide')
+	},
 
 	/**
 	 * Handler of the mousemove event, when triggered update the position of the tooltip.
