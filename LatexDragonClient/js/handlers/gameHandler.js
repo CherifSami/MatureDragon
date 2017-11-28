@@ -56,9 +56,12 @@ var self = module.exports = {
 	 */
 	setEvents: () => {
 		const mouseEventHandler = require('./mouseEventHandler')
+		/*const instance = require('../Application')
+	
+		var obj = instance.gameState.getCurrent().currentState*/
 
 		mouseEventHandler.setEvents()
-		//DragNDropHandler.setEvents(obj)
+		/*DragNDropHandler.setEvents(obj)*/
 	},
 
 	/**

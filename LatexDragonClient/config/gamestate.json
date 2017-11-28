@@ -1,1 +1,143 @@
-[]
+[
+  {
+    "gameId": "cfbdeaa7-036a-4913-9e49-da23d439913b",
+    "formulaId": "0",
+    "mode": "NORMAL",
+    "ruleSet": 1,
+    "useTheorem": false,
+    "countdown": {
+      "duration": 120000,
+      "remainingTime": 9136
+    },
+    "currentState": {
+      "math": "$$\\cssId{exp0}{\\cssId{exp00}{\\cssId{exp000}{2}*\\cssId{exp001}{a}}=\\cssId{exp01}{2}}$$",
+      "status": "SUCCESS",
+      "gameStatus": "RUNNING",
+      "ids": [
+        "exp01",
+        "exp00",
+        "exp000",
+        "exp0",
+        "exp001"
+      ],
+      "rules": [
+        {
+          "exp01": [
+            {
+              "text": "$${2} => {{({2})}+{0}}$$",
+              "ruleId": 0,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${2} => {{({2})}*{1}}$$",
+              "ruleId": 1,
+              "type": "contextMenu"
+            }
+          ]
+        },
+        {
+          "exp00": [
+            {
+              "text": "$${{2}*{a}} => {{a}*{2}}$$",
+              "ruleId": 0,
+              "type": "drag_and_drop"
+            },
+            {
+              "text": "$${{2}*{a}} => {{({{2}*{a}})}+{0}}$$",
+              "ruleId": 1,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${{2}*{a}} => {{({{2}*{a}})}*{1}}$$",
+              "ruleId": 2,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${{2}*{a}} => {({{2}*{a}})}$$",
+              "ruleId": 3,
+              "type": "contextMenu"
+            }
+          ]
+        },
+        {
+          "exp000": [
+            {
+              "text": "$${2} => {{({2})}+{0}}$$",
+              "ruleId": 0,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${2} => {{({2})}*{1}}$$",
+              "ruleId": 1,
+              "type": "contextMenu"
+            }
+          ]
+        },
+        {
+          "exp0": [
+            {
+              "text": "$${{{2}*{a}}={2}} => {{{({{2}*{a}})}\\over{a}}={{2}\\over{a}}}$$",
+              "ruleId": 0,
+              "type": "drag_and_drop"
+            },
+            {
+              "text": "$${{{2}*{a}}={2}} => {{({{{2}*{a}}={2}})}+{0}}$$",
+              "ruleId": 1,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${{{2}*{a}}={2}} => {{({{{2}*{a}}={2}})}*{1}}$$",
+              "ruleId": 2,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${{{2}*{a}}={2}} => {{{{2}*{a}}+{a}}={{2}+{a}}}$$",
+              "ruleId": 3,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${{{2}*{a}}={2}} => {{{({{2}*{a}})}-{a}}={{({2})}-{a}}}$$",
+              "ruleId": 4,
+              "type": "contextMenu"
+            }
+          ]
+        },
+        {
+          "exp001": [
+            {
+              "text": "$${a} => {{({a})}+{0}}$$",
+              "ruleId": 0,
+              "type": "contextMenu"
+            },
+            {
+              "text": "$${a} => {{({a})}*{1}}$$",
+              "ruleId": 1,
+              "type": "contextMenu"
+            }
+          ]
+        }
+      ],
+      "timeline": {
+        "current": 3,
+        "elements": [
+          {
+            "index": 0,
+            "text": "$${{{a}+{a}}={2}}$$"
+          },
+          {
+            "index": 1,
+            "text": "$${{{({a})}*{2}}={2}}$$"
+          },
+          {
+            "index": 2,
+            "text": "$${{{a}*{2}}={2}}$$"
+          },
+          {
+            "index": 3,
+            "text": "$${{{2}*{a}}={2}}$$"
+          }
+        ]
+      }
+    }
+  }
+]
