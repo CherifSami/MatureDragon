@@ -23,10 +23,12 @@ assurez vous bien que vous etez dans le dossier du client
 
 # Installation du serveur
 
+Cloner le dépôt :
+
 `git clone -b server https://github.com/CherifSami/LatexDragon`
 
-Compiler avec :
+Compillation avec avec *gradle*:
 > `gradle build`
 
-vous pouvez aussi utiliser gradlew :
+Compillation avec *gradlew*:
 > `./gradlew`
