@@ -10,9 +10,8 @@ Une liste de futur idée pour le projet ou de fonctionnalité à implémenter.
 * Remplacer le backend actuel par un backend utilisant [TOM](http://tom.loria.fr/wiki/index.php5/Main_Page)
 * Les parenthèses ne sont là que pour l'affichage, priorité sur opérateurs.
 * Avoir des règles-algorithmes, par exemple "a_constante*b_constante->#mult(a,b)" ou mult(.,.) est une fonction java.
-* Sauvegarde des parties côté serveur.
--Contraintes:
-Difficultés de compréhension de la structure du code
-Problème de 
+* Sauvegarde des parties côté serveur. Ces points n'ont pas été traités pour les raisons suivantes:
+-Difficultés de compréhension de la structure du code
+-Problème de 
 
 
