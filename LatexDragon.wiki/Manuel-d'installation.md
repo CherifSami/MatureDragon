@@ -41,8 +41,3 @@ Cloner le dépôt :
 
 `git clone -b server https://github.com/CherifSami/LatexDragon`
 
-Compillation avec avec *gradle*:
-> `gradle build`
-
-Compillation avec *gradlew*:
-> `./gradlew`
