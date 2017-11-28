@@ -8,6 +8,7 @@ Cloner le dépôt :
 l'installation de npm ça ce fait automatiquement avec nodeJs
 > `sudo apt-get install python-software-properties`
 > `curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -`
+
 > `sudo apt-get install -y nodejs`
 
 vous pouvez connaiter les dernier sistrubution sur le site officiel de [Node.js](https://nodejs.org/en/)
