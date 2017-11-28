@@ -1,8 +1,5 @@
 # Installation du client
 
-### Prérequis
-[Node.js](https://nodejs.org/en/)
-
 Cloner le dépôt :
 
 >`git clone -b client https://github.com/CherifSami/LatexDragon`
@@ -10,8 +7,10 @@ Cloner le dépôt :
 
 l'installation de npm ça ce fait automatiquement avec nodeJs
 > `sudo apt-get install python-software-properties`
+> `curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -`
+> `sudo apt-get install -y nodejs`
 
-aprés il faut lancer les commande sur 
+vous pouvez connaiter les dernier sistrubution sur le site officiel de [Node.js](https://nodejs.org/en/)
 https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
 
 Installer electron :
