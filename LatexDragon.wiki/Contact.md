@@ -5,9 +5,11 @@
 
 >**Développeurs client:** nicolas.lestage@etu.univ-amu.fr
 
+
 #### <i class="icon-refresh"></i> Version nightly
 
-**Membre de groupe:** 
+>> Membre de groupe:
+
 >hamid.lafredi@etu.univ-amu.fr
 
 >jean-alfred-patinde.zembo@etu.univ-amu.fr
