@@ -21,6 +21,20 @@ assurez vous bien que vous etez dans le dossier du client
 
 > `npm install electron --save-dev`
 
+### Compilation/Déploiement
+
+
+Utiliser electron-packager :
+
+> `electron-packager . LibreDragon`
+
+Pour plus d'information consulter la documentation d'[electron](https://github.com/electron/electron/tree/master/docs) et [electron-packager](https://github.com/electron-userland/electron-packager).
+
+**PS:** vous pouvez installer electron globalement avec :
+> `npm install electron -g`
+
+Vous avez aussi besoin d'une connexion a internet car MathJax est récupéré sur un CDN.
+
 # Installation du serveur
 
 Cloner le dépôt :
