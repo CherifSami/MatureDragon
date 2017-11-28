@@ -1,4 +1,5 @@
 # Qu'est-ce que LatexDragon ?
+..
 
 LatexDragon est un projet open source ayant pour but la création d'une application permettant la manipulation de formule mathématique sous la forme d'un jeu éducatif.
 
