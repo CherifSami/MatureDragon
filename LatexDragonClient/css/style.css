@@ -304,6 +304,10 @@ body {
 	display: block;
 }
 
+#Exp{
+	width: 100%;
+}
+
 #timeline {
 	display: none;
 	width: calc(100% - 50px);
@@ -328,7 +332,7 @@ body {
 	cursor: pointer;
 }
 
-#showTimeline, #validTheorem, #cancelTheorem, #restartGame {
+#showTimeline, #validTheorem, #cancelTheorem, #restartGame, #pauseGame {
 	display: none;
 }
 
@@ -345,7 +349,7 @@ body {
 
 #timeline-elements::-webkit-scrollbar {
 	display: block;
-	height: 10px;
+	height: 50px;
 }
 
 #timeline-elements::-webkit-scrollbar-thumb {
@@ -358,7 +362,6 @@ body {
 	display: inline-block;
 	vertical-align: middle;
 	margin: 10px;
-	margin-bottom: 20px;
 	padding: 5px;
 	color: #222;
 }

@@ -71,6 +71,7 @@ var self = module.exports = {
 		$('.toolbar').show().animateCss('slideInLeft', 0.3, 0, () => {
 			$('#main-content').show().animateCss('slideInLeft', 0.3)
 			$('#timeline').show().animateCss('slideInUp', 0.3)
+			self.updateTimelineSize()
 		})
 	},
 
@@ -89,6 +90,13 @@ var self = module.exports = {
 			throw '[ERROR]: request response invalid, request might have failed.'
 
 		Request.buildRequest('GAMESTATE', self.gameStartResponse).send('/' + instance.gameState.getCurrent().gameId)
+	
+		var current = instance.gameState.getCurrent()
+
+		if (current.mode == 'NORMAL') {
+			$('#restartGame').hide()
+			$('#pauseGame').css('display', 'flex')
+		}
 	},
 
 	/**
@@ -126,11 +134,6 @@ var self = module.exports = {
 
 		var request = Request.buildRequest('GAMESTATE', self.gameStartResponse).send('/' + o.id)
 
-		var current = instance.gameState.getCurrent()
-
-		if (current.mode != 'NORMAL') {
-			$('#pauseGame').hide()
-		}
 	},
 
 	/**
@@ -157,6 +160,12 @@ var self = module.exports = {
 		instance.gameState.stopCountdown()
 		$('#game-timer').hide()
 		$('#game-timer').tooltip('hide')
+
+		var current = instance.gameState.getCurrent()
+
+		if (current.mode == 'NORMAL') {
+			$('#pauseGame').css('display', 'flex')
+		}
 		
 
 		//Start timer
@@ -180,6 +189,12 @@ var self = module.exports = {
 		instance.gameState.stopCountdown()
 		$('#game-timer').hide()
 		$('#game-timer').tooltip('hide')
+
+		var current = instance.gameState.getCurrent()
+		if (current.mode == 'NORMAL') {
+			$('#restartGame').hide()
+			$('#pauseGame').css('display', 'flex')
+		}
 
 		//Start timer
 		self.startTimer()

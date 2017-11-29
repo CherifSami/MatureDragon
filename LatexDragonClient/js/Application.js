@@ -283,10 +283,10 @@ class Application {
 		$('#popup').modal('show')
 	}
 	
-	displayPopup2 (title, content, leftButton, rightButton, leftButtonHandler, rightButtonHandler, onHide,form) {
+	displayPopup2 (title, content, leftButton, rightButton, leftButtonHandler, rightButtonHandler, onHide) {
 		$('#popup-title').text(title)
 		$('#popup-body').text(content)
-		$('#popup-body').append('<div> <form> <input type="text" name="expr"> </input> </form> </div>')
+		$('#popup-body').append('<input id="Exp" type="text"> </input>')
 
 		if (leftButton.length > 0)
 			$('#popup-button-left').text(leftButton)

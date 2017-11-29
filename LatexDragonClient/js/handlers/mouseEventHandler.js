@@ -69,7 +69,7 @@ var self = module.exports = {
 
 		const instance = require('../Application')
 
-		instance.displayPopup2('Ajout d\'une nouvelle expression pour l\'équation', 'Voulez-vous ajouter une expression ?', 'Oui', 'Annuler', self.sendExpression, () => { $('#popup').modal('hide'),'toto' })
+		instance.displayPopup2('Veuillez saisir une expression', '', 'Valider', 'Annuler', self.sendExpression, () => { $('#popup').modal('hide') })
 		
 		
 	},
@@ -77,14 +77,15 @@ var self = module.exports = {
 	/**
 	 * 
 	 */
-	sendExpression: () => {
-		const instance = require('../Application')
+	sendExpression: (expr) => {
+		alert(document.getElementById("Exp").value)
+		/*const instance = require('../Application')
 		const Request = require('../Request')
 
 		Request.buildRequest('CREATETHEOREM').send('/' + instance.gameState.getCurrent().gameId + '/' + self.theoremSelection.start + '/' + self.theoremSelection.end)
 
 		self.toggleCreateTheorem()
-		$('#popup').modal('hide')
+		$('#popup').modal('hide')*/
 	},
 
 	/**
